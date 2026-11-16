@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sobre Nós | D-Raw Clothing</title>
+
+    <style>
+
+        /* CONFIGURAÇÕES GERAIS */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #850025;
+            color: #f1dfc4;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* CABEÇALHO */
+
+        .topo-fixo {
+            width: 100%;
+            height: 88px;
+            background-color: #850025;
+            border-bottom: 1px solid rgba(241,223,196,0.25);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container-topo {
+            height: 100%;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            border: 2px solid #f1dfc4;
+            padding: 11px 18px;
+        }
+
+        .logo-texto {
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .navegacao-direita {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .menu-secoes {
+            display: flex;
+            gap: 25px;
+        }
+
+        .menu-item {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .menu-linhas {
+            width: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            cursor: pointer;
+        }
+
+        .menu-linhas span {
+            width: 27px;
+            height: 2px;
+            background-color: #f1dfc4;
+        }
+
+        /* MENU LATERAL */
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.65);
+            z-index: 1001;
+            display: none;
+        }
+
+        .menu-overlay.ativo {
+            display: block;
+        }
+
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 330px;
+            height: 100%;
+            background-color: #65001c;
+            z-index: 1002;
+            transition: 0.35s;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .menu-lateral.ativo {
+            right: 0;
+        }
+
+        .btn-fechar {
+            font-size: 38px;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .conteudo-menu-lateral {
+            margin-top: 40px;
+        }
+
+        .grupo-menu {
+            margin-bottom: 35px;
+        }
+
+        .titulo-grupo {
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(241,223,196,0.3);
+            padding-bottom: 10px;
+        }
+
+        .lista-menu {
+            list-style: none;
+        }
+
+        .lista-menu li {
+            margin-bottom: 15px;
+        }
+
+        .lista-menu a {
+            font-size: 16px;
+        }
+
+        .lista-menu a:hover {
+            opacity: 0.6;
+        }
+
+        /* CONTEÚDO */
+
+        main {
+            padding-top: 88px;
+        }
+
+        /* BANNER SOBRE NÓS */
+
+        .banner-sobre {
+            min-height: 480px;
+            padding: 100px 8%;
+            display: flex;
+            align-items: center;
+            background-color: #74001f;
+        }
+
+        .banner-texto {
+            max-width: 800px;
+        }
+
+        .subtitulo {
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 4px;
+        }
+
+        .banner-sobre h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.1;
+            margin: 25px 0;
+        }
+
+        .banner-sobre p {
+            font-size: 19px;
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        /* HISTÓRIA DA MARCA */
+
+        .historia {
+            padding: 90px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .historia-texto h2 {
+            font-size: 34px;
+            margin: 20px 0;
+        }
+
+        .historia-texto p {
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        .historia-imagem {
+            width: 100%;
+            height: 430px;
+            background-color: #65001c;
+            overflow: hidden;
+        }
+
+        .historia-imagem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* NOSSO DIFERENCIAL */
+
+        .diferenciais {
+            padding: 85px 8%;
+            background-color: #65001c;
+        }
+
+        .cabecalho-diferenciais {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cabecalho-diferenciais h2 {
+            font-size: 35px;
+            margin: 18px 0;
+        }
+
+        .cabecalho-diferenciais p {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .grade-diferenciais {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card-diferencial {
+            border: 1px solid rgba(241,223,196,0.3);
+            padding: 35px 25px;
+            min-height: 230px;
+            transition: 0.3s;
+        }
+
+        .card-diferencial:hover {
+            transform: translateY(-5px);
+            border-color: #f1dfc4;
+        }
+
+        .card-diferencial h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .card-diferencial p {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* IDENTIDADE DA MARCA */
+
+        .identidade {
+            padding: 100px 8%;
+            text-align: center;
+        }
+
+        .identidade h2 {
+            font-size: 36px;
+            margin: 25px 0;
+        }
+
+        .identidade p {
+            max-width: 800px;
+            margin: auto;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        /* CHAMADA FINAL */
+
+        .chamada-final {
+            background-color: #65001c;
+            text-align: center;
+            padding: 75px 20px;
+        }
+
+        .chamada-final h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .chamada-final p {
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .botao-voltar {
+            display: inline-block;
+            padding: 15px 25px;
+            border: 1px solid #f1dfc4;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .botao-voltar:hover {
+            background-color: #f1dfc4;
+            color: #850025;
+        }
+
+        /* RODAPÉ */
+
+        .rodape {
+            background-color: #850025;
+            padding: 50px 25px 25px;
+            text-align: center;
+        }
+
+        .rodape h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .links-rodape {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+            border-top: 1px solid rgba(241,223,196,0.2);
+            padding-top: 25px;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 800px) {
+
+            .historia {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .grade-diferenciais {
+                grid-template-columns: 1fr;
+            }
+
+            .historia-imagem {
+                height: 350px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .topo-fixo {
+                height: 75px;
+            }
+
+            main {
+                padding-top: 75px;
+            }
+
+            .container-topo {
+                padding: 0 15px;
+            }
+
+            .logo-box {
+                padding: 9px 10px;
+            }
+
+            .logo-texto {
+                font-size: 18px;
+            }
+
+            .navegacao-direita {
+                gap: 15px;
+            }
+
+            .menu-secoes {
+                gap: 12px;
+            }
+
+            .menu-item {
+                font-size: 12px;
+            }
+
+            .banner-sobre {
+                padding: 75px 7%;
+                min-height: 400px;
+            }
+
+            .banner-sobre h1 {
+                font-size: 40px;
+            }
+
+            .historia,
+            .diferenciais,
+            .identidade {
+                padding: 65px 7%;
+            }
+
+            .historia-texto h2,
+            .cabecalho-diferenciais h2,
+            .identidade h2 {
+                font-size: 27px;
+            }
+
+            .menu-lateral {
+                width: 290px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+
+    <header class="topo-fixo">
+
+        <div class="container-topo">
+
+            <div class="logo-box">
+                <a href="mostrador.html">
+                    <span class="logo-texto">D-Raw Clothing</span>
+                </a>
+            </div>
+
+            <div class="navegacao-direita">
+
+                <nav class="menu-secoes">
+                    <a href="mostrador.html#masculino" class="menu-item">Masculino</a>
+                    <a href="mostrador.html#feminino" class="menu-item">Feminino</a>
+                </nav>
+
+                <div class="menu-linhas" id="btn-abrir-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- FUNDO DO MENU -->
+
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- MENU LATERAL -->
+
+    <nav class="menu-lateral" id="menu-lateral">
+
+        <div class="btn-fechar" id="btn-fechar-menu">&times;</div>
+
+        <div class="conteudo-menu-lateral">
+
+            <div class="grupo-menu">
+
+                <h3 class="titulo-grupo">Setor Masculino</h3>
+
+                <ul class="lista-menu">
+                    <li><a href="mostrador.html#jaquetas-couro">Jaquetas de Couro</a></li>
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <h3 class="titulo-grupo">Setor Feminino</h3>
+
+                <ul class="lista-menu">
+                    <li><a href="mostrador.html#bolsas">Bolsas</a></li>
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <ul class="lista-menu">
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                    <li><a href="mostrador.html#contato">Contato</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="mostrador.html#transparencia">Transparência</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+
+    <main>
+
+        <!-- BANNER -->
+
+        <section class="banner-sobre">
+
+            <div class="banner-texto">
+
+                <span class="subtitulo">D-RAW CLOTHING / NOSSA HISTÓRIA</span>
+
+                <h1>MAIS QUE UMA JAQUETA. UMA IDENTIDADE.</h1>
+
+                <p>
+                    Acreditamos que a moda deve representar quem você é.
+                    Por isso, criamos peças em couro que vão além do
+                    convencional, combinando autenticidade, personalidade
+                    e design exclusivo.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- HISTÓRIA DA EMPRESA -->
+
+        <section class="historia">
+
+            <div class="historia-texto">
+
+                <span class="subtitulo">QUEM SOMOS</span>
+
+                <h2>UMA NOVA FORMA DE ENXERGAR A MODA EM COURO.</h2>
+
+                <p>
+                    A D-Raw Clothing é uma marca que busca transformar
+                    a maneira como as pessoas enxergam as roupas de couro.
+                    Nosso objetivo é oferecer peças que expressem
+                    personalidade, criatividade e autenticidade.
+                </p>
+
+                <p>
+                    Diferente das jaquetas tradicionais, que geralmente
+                    seguem modelos simples e predominam na cor preta,
+                    acreditamos que uma peça pode carregar muito mais
+                    identidade.
+                </p>
+
+                <p>
+                    Trabalhamos com a proposta de desenvolver jaquetas
+                    estilizadas, com bordados, desenhos, detalhes
+                    diferenciados e possibilidades de personalização.
+                    Cada detalhe pode transformar uma roupa em uma
+                    expressão individual.
+                </p>
+
+            </div>
+
+            <div class="historia-imagem">
+
+                <img src="jaquetas/Proud-2026-Lgnacy-Jacket.webp"
+                    alt="Jaqueta de couro da D-Raw Clothing">
+
+            </div>
+
+        </section>
+
+        <!-- DIFERENCIAIS -->
+
+        <section class="diferenciais">
+
+            <div class="cabecalho-diferenciais">
+
+                <span class="subtitulo">NOSSO DIFERENCIAL</span>
+
+                <h2>O QUE TORNA A D-RAW DIFERENTE?</h2>
+
+                <p>
+                    Não queremos produzir apenas mais uma peça de roupa.
+                    Queremos oferecer algo que tenha significado e identidade.
+                </p>
+
+            </div>
+
+            <div class="grade-diferenciais">
+
+                <div class="card-diferencial">
+
+                    <h3>01. BORDADOS E DESENHOS</h3>
+
+                    <p>
+                        Desenvolvemos a proposta de utilizar bordados,
+                        ilustrações e elementos visuais para transformar
+                        jaquetas tradicionais em peças diferenciadas.
+                    </p>
+
+                </div>
+
+                <div class="card-diferencial">
+
+                    <h3>02. PERSONALIZAÇÃO</h3>
+
+                    <p>
+                        Acreditamos que cada pessoa possui seu próprio
+                        estilo. Por isso, buscamos oferecer possibilidades
+                        de personalização com desenhos e detalhes exclusivos.
+                    </p>
+
+                </div>
+
+                <div class="card-diferencial">
+
+                    <h3>03. DESIGN AUTÊNTICO</h3>
+
+                    <p>
+                        Fugimos da aparência básica e repetitiva.
+                        Nossa proposta é explorar diferentes estilos,
+                        combinações e detalhes que valorizem cada peça.
+                    </p>
+
+                </div>
+
+                <div class="card-diferencial">
+
+                    <h3>04. QUALIDADE</h3>
+
+                    <p>
+                        Valorizamos materiais de qualidade, bons acabamentos
+                        e atenção aos detalhes para proporcionar produtos
+                        duráveis e bem desenvolvidos.
+                    </p>
+
+                </div>
+
+                <div class="card-diferencial">
+
+                    <h3>05. IDENTIDADE PRÓPRIA</h3>
+
+                    <p>
+                        Queremos que nossas peças sejam reconhecidas
+                        pela personalidade e pelo cuidado em seu design,
+                        e não apenas pela marca estampada.
+                    </p>
+
+                </div>
+
+                <div class="card-diferencial">
+
+                    <h3>06. ESTILO SEM LIMITES</h3>
+
+                    <p>
+                        A moda não precisa seguir sempre os mesmos padrões.
+                        Incentivamos a criatividade e a liberdade para
+                        expressar diferentes personalidades.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- IDENTIDADE -->
+
+        <section class="identidade">
+
+            <span class="subtitulo">NOSSA FILOSOFIA</span>
+
+            <h2>NÃO SEGUIR O PADRÃO. CRIAR O PRÓPRIO.</h2>
+
+            <p>
+                A D-Raw Clothing acredita que o verdadeiro estilo está
+                nos detalhes. Uma jaqueta não precisa ser apenas preta,
+                lisa e igual a tantas outras. Ela pode carregar histórias,
+                desenhos, referências e elementos que representem
+                quem a veste. Nossa proposta é unir a tradição do couro
+                com uma visão mais criativa e contemporânea da moda.
+            </p>
+
+        </section>
+
+        <!-- CHAMADA FINAL -->
+
+        <section class="chamada-final">
+
+            <h2>ENCONTRE SEU PRÓPRIO ESTILO.</h2>
+
+            <p>
+                Conheça nossas coleções e descubra uma nova maneira
+                de expressar sua personalidade.
+            </p>
+
+            <a href="mostrador.html" class="botao-voltar">
+                EXPLORAR COLEÇÃO
+            </a>
+
+        </section>
+
+        <!-- RODAPÉ -->
+
+        <footer class="rodape">
+
+            <h2>D-Raw Clothing</h2>
+
+            <p>Estilo, qualidade e autenticidade.</p>
+
+            <div class="links-rodape">
+
+                <a href="mostrador.html#masculino">Masculino</a>
+                <a href="mostrador.html#feminino">Feminino</a>
+                <a href="sobre.html">Sobre Nós</a>
+                <a href="cadastro.html">Cadastro</a>
+                <a href="login.html">Login</a>
+
+            </div>
+
+            <p class="copyright">
+                © 2026 D-Raw Clothing. Todos os direitos reservados.
+            </p>
+
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT DO MENU -->
+
+    <script>
+
+        var abrirMenu = document.getElementById("btn-abrir-menu");
+
+        var fecharMenu = document.getElementById("btn-fechar-menu");
+
+        var menuLateral = document.getElementById("menu-lateral");
+
+        var overlay = document.getElementById("menu-overlay");
+
+        abrirMenu.addEventListener("click", function() {
+
+            menuLateral.classList.add("ativo");
+
+            overlay.classList.add("ativo");
+
+        });
+
+        fecharMenu.addEventListener("click", function() {
+
+            menuLateral.classList.remove("ativo");
+
+            overlay.classList.remove("ativo");
+
+        });
+
+        overlay.addEventListener("click", function() {
+
+            menuLateral.classList.remove("ativo");
+
+            overlay.classList.remove("ativo");
+
+        });
+
+        var linksMenu = document.querySelectorAll(".lista-menu a");
+
+        linksMenu.forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                menuLateral.classList.remove("ativo");
+
+                overlay.classList.remove("ativo");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

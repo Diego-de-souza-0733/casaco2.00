@@ -1,0 +1,35 @@
+/* =========================================
+   FUNDO VERMELHO DO MOSTRADOR
+========================================= */
+
+html,
+body {
+    background-color: #800020;
+    color: #E6D7C3;
+}
+
+.conteudo-pagina {
+    background-color: #800020;
+}
+
+.secao-loja,
+.sobre-loja {
+    background-color: transparent;
+}
+
+/* Cabeçalho */
+.topo-fixo {
+    background-color: #800020;
+}
+
+/* Banner */
+.banner-principal {
+    background: #800020;
+}
+
+/* Mantém os cards em um tom mais escuro */
+.produto,
+.faixa-colecao,
+.rodape {
+    background-color: #5c0017;
+}

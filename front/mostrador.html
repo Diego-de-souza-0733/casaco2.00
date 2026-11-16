@@ -1,0 +1,1796 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>D-Raw Clothing</title>
+
+    <style>
+
+        /* =========================================
+           CONFIGURAÇÕES GERAIS
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #850025;
+            color: #f1dfc4;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================================
+           CABEÇALHO
+        ========================================= */
+
+        .topo-fixo {
+            width: 100%;
+            height: 88px;
+            background-color: #850025;
+            border-bottom: 1px solid rgba(241, 223, 196, 0.25);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .container-topo {
+            width: 100%;
+            height: 100%;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            border: 2px solid #f1dfc4;
+            padding: 11px 18px;
+        }
+
+        .logo-texto {
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .navegacao-direita {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .menu-secoes {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .menu-item {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .menu-item:hover {
+            opacity: 0.7;
+        }
+
+        .menu-linhas {
+            width: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            cursor: pointer;
+        }
+
+        .menu-linhas span {
+            width: 27px;
+            height: 2px;
+            background-color: #f1dfc4;
+        }
+
+        /* =========================================
+           ÍCONE DO CARRINHO
+        ========================================= */
+
+        .carrinho-icone {
+            position: relative;
+            cursor: pointer;
+            font-size: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+        }
+
+        .contador-carrinho {
+            position: absolute;
+            top: -5px;
+            right: -7px;
+            background-color: #f1dfc4;
+            color: #850025;
+            border-radius: 50%;
+            width: 19px;
+            height: 19px;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =========================================
+           MENU LATERAL
+        ========================================= */
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1001;
+            display: none;
+        }
+
+        .menu-overlay.ativo {
+            display: block;
+        }
+
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 330px;
+            height: 100%;
+            background-color: #65001c;
+            z-index: 1002;
+            transition: 0.35s;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .menu-lateral.ativo {
+            right: 0;
+        }
+
+        .btn-fechar {
+            font-size: 38px;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .conteudo-menu-lateral {
+            margin-top: 40px;
+        }
+
+        .grupo-menu {
+            margin-bottom: 35px;
+        }
+
+        .titulo-grupo {
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(241, 223, 196, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .lista-menu {
+            list-style: none;
+        }
+
+        .lista-menu li {
+            margin-bottom: 15px;
+        }
+
+        .lista-menu a {
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .lista-menu a:hover {
+            opacity: 0.6;
+            padding-left: 5px;
+        }
+
+        /* =========================================
+           CARRINHO LATERAL
+        ========================================= */
+
+        .carrinho-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1003;
+            display: none;
+        }
+
+        .carrinho-overlay.ativo {
+            display: block;
+        }
+
+        .carrinho-lateral {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 420px;
+            max-width: 100%;
+            height: 100%;
+            background-color: #65001c;
+            z-index: 1004;
+            transition: 0.35s;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+        }
+
+        .carrinho-lateral.ativo {
+            right: 0;
+        }
+
+        .carrinho-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(241, 223, 196, 0.3);
+        }
+
+        .carrinho-cabecalho h2 {
+            font-size: 21px;
+        }
+
+        .fechar-carrinho {
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        .itens-carrinho {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .carrinho-vazio {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        .item-carrinho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(241, 223, 196, 0.2);
+        }
+
+        .item-carrinho-info {
+            flex: 1;
+        }
+
+        .item-carrinho-info h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .item-carrinho-info p {
+            font-size: 14px;
+        }
+
+        .botao-remover {
+            background: none;
+            border: 1px solid #f1dfc4;
+            color: #f1dfc4;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .botao-remover:hover {
+            background-color: #f1dfc4;
+            color: #850025;
+        }
+
+        .carrinho-rodape {
+            border-top: 1px solid rgba(241, 223, 196, 0.3);
+            padding-top: 20px;
+        }
+
+        .total-carrinho {
+            display: flex;
+            justify-content: space-between;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .botao-finalizar {
+            width: 100%;
+            padding: 15px;
+            background-color: #f1dfc4;
+            color: #850025;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .botao-finalizar:hover {
+            background-color: white;
+        }
+
+        /* =========================================
+           CONTEÚDO PRINCIPAL
+        ========================================= */
+
+        .conteudo-pagina {
+            padding-top: 88px;
+        }
+
+        /* =========================================
+           BANNER PRINCIPAL
+        ========================================= */
+
+        .banner-principal {
+            min-height: 460px;
+            display: flex;
+            align-items: center;
+            padding: 65px 6%;
+            background-color: #850025;
+        }
+
+        .banner-conteudo {
+            max-width: 650px;
+        }
+
+        .banner-conteudo span {
+            font-size: 14px;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+
+        .banner-conteudo h1 {
+            font-size: clamp(40px, 6vw, 68px);
+            line-height: 1.1;
+            margin: 22px 0;
+        }
+
+        .banner-conteudo p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .botao-banner {
+            display: inline-block;
+            padding: 15px 25px;
+            border: 1px solid #f1dfc4;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .botao-banner:hover {
+            background-color: #f1dfc4;
+            color: #850025;
+        }
+
+        /* =========================================
+           SEÇÕES DA LOJA
+        ========================================= */
+
+        .secao-loja {
+            width: 100%;
+            padding: 65px 5%;
+            background-color: #850025;
+        }
+
+        .cabecalho-secao {
+            margin-bottom: 45px;
+        }
+
+        .subtitulo-secao {
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .cabecalho-secao h2 {
+            font-size: 36px;
+            margin: 15px 0;
+        }
+
+        .cabecalho-secao p {
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           GRADE DE PRODUTOS
+        ========================================= */
+
+        .grade-produtos {
+            width: 100%;
+            max-width: 1350px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 35px 25px;
+        }
+
+        /* =========================================
+           PRODUTOS
+        ========================================= */
+
+        .produto {
+            width: 100%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #74001f;
+            border: 1px solid rgba(241, 223, 196, 0.2);
+            transition: 0.3s;
+        }
+
+        .produto:hover {
+            transform: translateY(-5px);
+            border-color: #f1dfc4;
+        }
+
+        .imagem-produto {
+            width: 100%;
+            height: 380px;
+            padding: 15px;
+            overflow: hidden;
+            background-color: #f1dfc4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .imagem-produto img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: 0.4s;
+        }
+
+        .produto:hover .imagem-produto img {
+            transform: scale(1.04);
+        }
+
+        .informacoes-produto {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex-grow: 1;
+        }
+
+        .categoria-produto {
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            opacity: 0.8;
+        }
+
+        .informacoes-produto h3 {
+            font-size: 21px;
+            margin: 15px 0;
+        }
+
+        .preco-produto {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 22px;
+        }
+
+        .botao-produto {
+            display: inline-block;
+            margin-top: auto;
+            padding: 12px 20px;
+            border: 1px solid #f1dfc4;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            cursor: pointer;
+            background: transparent;
+            color: #f1dfc4;
+        }
+
+        .botao-produto:hover {
+            background-color: #f1dfc4;
+            color: #850025;
+        }
+
+        /* =========================================
+           FAIXA DE DIVISÃO
+        ========================================= */
+
+        .faixa-colecao {
+            width: 100%;
+            min-height: 130px;
+            background-color: #65001c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .faixa-colecao p {
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        /* =========================================
+           SOBRE NÓS
+        ========================================= */
+
+        .sobre-loja {
+            width: 100%;
+            padding: 100px 7%;
+            background-color: #65001c;
+            text-align: center;
+            scroll-margin-top: 88px;
+        }
+
+        .sobre-conteudo {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .sobre-conteudo h2 {
+            font-size: 38px;
+            margin: 25px 0;
+        }
+
+        .sobre-conteudo p {
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .sobre-diferenciais {
+            max-width: 1200px;
+            margin: 65px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .diferencial {
+            border: 1px solid rgba(241, 223, 196, 0.3);
+            padding: 35px 20px;
+            transition: 0.3s;
+        }
+
+        .diferencial:hover {
+            transform: translateY(-5px);
+            border-color: #f1dfc4;
+        }
+
+        .diferencial h3 {
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .diferencial p {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .sobre-final {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .sobre-final h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .sobre-final p {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* =========================================
+           RODAPÉ
+        ========================================= */
+
+        .rodape {
+            background-color: #65001c;
+            padding: 55px 25px 25px;
+            text-align: center;
+        }
+
+        .rodape h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .rodape p {
+            margin-bottom: 20px;
+        }
+
+        .links-rodape {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .links-rodape a:hover {
+            opacity: 0.6;
+        }
+
+        .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+            border-top: 1px solid rgba(241, 223, 196, 0.2);
+            padding-top: 25px;
+        }
+
+        /* =========================================
+           RESPONSIVIDADE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .grade-produtos {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .imagem-produto {
+                height: 340px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .sobre-diferenciais {
+                grid-template-columns: 1fr;
+            }
+
+            .sobre-conteudo h2 {
+                font-size: 28px;
+            }
+
+            .sobre-final h2 {
+                font-size: 24px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .topo-fixo {
+                height: 75px;
+            }
+
+            .container-topo {
+                padding: 0 15px;
+            }
+
+            .logo-box {
+                padding: 9px 10px;
+            }
+
+            .logo-texto {
+                font-size: 18px;
+            }
+
+            .navegacao-direita {
+                gap: 12px;
+            }
+
+            .menu-secoes {
+                gap: 12px;
+            }
+
+            .menu-item {
+                font-size: 12px;
+            }
+
+            .conteudo-pagina {
+                padding-top: 75px;
+            }
+
+            .banner-principal {
+                min-height: 390px;
+                padding: 45px 7%;
+            }
+
+            .banner-conteudo h1 {
+                font-size: 42px;
+            }
+
+            .secao-loja {
+                padding: 50px 5%;
+            }
+
+            .cabecalho-secao h2 {
+                font-size: 27px;
+            }
+
+            .grade-produtos {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .imagem-produto {
+                height: 400px;
+            }
+
+            .menu-lateral {
+                width: 290px;
+            }
+
+            .sobre-loja {
+                padding: 65px 7%;
+            }
+
+            .carrinho-lateral {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================================
+         TOPO FIXO
+    ========================================= -->
+
+    <header class="topo-fixo">
+
+        <div class="container-topo">
+
+            <div class="logo-box">
+
+                <a href="mostrador.html">
+                    <span class="logo-texto">D-Raw Clothing</span>
+                </a>
+
+            </div>
+
+            <div class="navegacao-direita">
+
+                <nav class="menu-secoes">
+
+                    <a href="#masculino" class="menu-item">Masculino</a>
+
+                    <a href="#feminino" class="menu-item">Feminino</a>
+
+                </nav>
+
+                <!-- CARRINHO -->
+
+                <div class="carrinho-icone" id="abrir-carrinho">
+
+                    🛒
+
+                    <span class="contador-carrinho" id="contador-carrinho">
+                        0
+                    </span>
+
+                </div>
+
+                <!-- MENU HAMBÚRGUER -->
+
+                <div class="menu-linhas" id="btn-abrir-menu">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- FUNDO ESCURO DO MENU -->
+
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- =========================================
+         MENU LATERAL
+    ========================================= -->
+
+    <nav class="menu-lateral" id="menu-lateral">
+
+        <div class="btn-fechar" id="btn-fechar-menu">&times;</div>
+
+        <div class="conteudo-menu-lateral">
+
+            <div class="grupo-menu">
+
+                <h3 class="titulo-grupo">Setor Masculino</h3>
+
+                <ul class="lista-menu">
+
+                    <li>
+                        <a href="#jaquetas-couro">Jaquetas de Couro</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <h3 class="titulo-grupo">Setor Feminino</h3>
+
+                <ul class="lista-menu">
+
+                    <li>
+                        <a href="#bolsas">Bolsas</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <ul class="lista-menu">
+
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+
+                    <li><a href="#contato">Contato</a></li>
+
+                    <li><a href="cadastro.html">Cadastro</a></li>
+
+                    <li><a href="login.html">Login</a></li>
+
+                    <li><a href="#transparencia">Transparência</a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- =========================================
+         CARRINHO LATERAL
+    ========================================= -->
+
+    <div class="carrinho-overlay" id="carrinho-overlay"></div>
+
+    <aside class="carrinho-lateral" id="carrinho-lateral">
+
+        <div class="carrinho-cabecalho">
+
+            <h2>MEU CARRINHO</h2>
+
+            <span class="fechar-carrinho" id="fechar-carrinho">
+                &times;
+            </span>
+
+        </div>
+
+        <div class="itens-carrinho" id="itens-carrinho">
+
+            <p class="carrinho-vazio">
+                Seu carrinho está vazio.
+            </p>
+
+        </div>
+
+        <div class="carrinho-rodape">
+
+            <div class="total-carrinho">
+
+                <span>Total:</span>
+
+                <span id="total-carrinho">R$ 0,00</span>
+
+            </div>
+
+            <button class="botao-finalizar" onclick="finalizarCompra()">
+                FINALIZAR COMPRA
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- =========================================
+         CONTEÚDO PRINCIPAL
+    ========================================= -->
+
+    <main class="conteudo-pagina">
+
+        <!-- BANNER PRINCIPAL -->
+
+        <section class="banner-principal">
+
+            <div class="banner-conteudo">
+
+                <span>COLEÇÃO 2026</span>
+
+                <h1>ESTILO QUE<br>DEFINE VOCÊ.</h1>
+
+                <p>
+                    Autenticidade, qualidade e personalidade
+                    em cada detalhe.
+                </p>
+
+                <a href="#masculino" class="botao-banner">
+                    EXPLORAR COLEÇÃO
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             SETOR MASCULINO
+        ====================================== -->
+
+        <section id="masculino" class="secao-loja">
+
+            <div class="cabecalho-secao">
+
+                <span class="subtitulo-secao">D-RAW COLLECTION</span>
+
+                <h2>COLEÇÃO MASCULINA</h2>
+
+                <p>
+                    Jaquetas selecionadas para quem valoriza
+                    estilo e autenticidade.
+                </p>
+
+            </div>
+
+            <div class="grade-produtos" id="jaquetas-couro">
+
+                <!-- JAQUETA 1 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/Proud-2026-Lgnacy-Jacket.webp"
+                            alt="Proud Legacy Jacket">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Proud Legacy Jacket</h3>
+
+                        <p class="preco-produto">R$ 899,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- JAQUETA 2 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/WhatsApp Image 2026-11-16 at 17.43.54.jpeg"
+                            alt="Urban Jacket">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Urban Jacket</h3>
+
+                        <p class="preco-produto">R$ 749,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- JAQUETA 3 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/WhatsApp Image 2026-11-16 at 17.43.55 (1).jpeg"
+                            alt="Classic Leather">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Classic Leather</h3>
+
+                        <p class="preco-produto">R$ 829,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- JAQUETA 4 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/WhatsApp Image 2026-11-16 at 17.43.55 (2).jpeg"
+                            alt="Premium Jacket">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Premium Jacket</h3>
+
+                        <p class="preco-produto">R$ 879,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- JAQUETA 5 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/WhatsApp Image 2026-11-16 at 17.43.55.jpeg"
+                            alt="Essential Leather">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Essential Leather</h3>
+
+                        <p class="preco-produto">R$ 699,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- JAQUETA 6 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="jaquetas/images.jfif"
+                            alt="Vintage Jacket">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            MASCULINO / JAQUETAS
+                        </span>
+
+                        <h3>Vintage Jacket</h3>
+
+                        <p class="preco-produto">R$ 799,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             FAIXA DE DIVISÃO
+        ====================================== -->
+
+        <section class="faixa-colecao">
+
+            <p>DESIGN ATEMPORAL. PERSONALIDADE INCONFUNDÍVEL.</p>
+
+        </section>
+
+        <!-- =====================================
+             SETOR FEMININO
+        ====================================== -->
+
+        <section id="feminino" class="secao-loja">
+
+            <div class="cabecalho-secao">
+
+                <span class="subtitulo-secao">D-RAW COLLECTION</span>
+
+                <h2>COLEÇÃO FEMININA</h2>
+
+                <p>
+                    Elegância e sofisticação em acessórios
+                    que fazem a diferença.
+                </p>
+
+            </div>
+
+            <div class="grade-produtos" id="bolsas">
+
+                <!-- BOLSA 1 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/1.jfif"
+                            alt="Classic Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Classic Bag</h3>
+
+                        <p class="preco-produto">R$ 599,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- BOLSA 2 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/shopping.webp"
+                            alt="Elegant Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Elegant Bag</h3>
+
+                        <p class="preco-produto">R$ 799,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- BOLSA 3 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/images (1).jfif"
+                            alt="Modern Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Modern Bag</h3>
+
+                        <p class="preco-produto">R$ 649,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- BOLSA 4 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/images (2).jfif"
+                            alt="Premium Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Premium Bag</h3>
+
+                        <p class="preco-produto">R$ 899,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- BOLSA 5 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/images (3).jfif"
+                            alt="Urban Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Urban Bag</h3>
+
+                        <p class="preco-produto">R$ 749,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- BOLSA 6 -->
+
+                <article class="produto">
+
+                    <div class="imagem-produto">
+
+                        <img src="bolsas/images.jfif"
+                            alt="Essential Bag">
+
+                    </div>
+
+                    <div class="informacoes-produto">
+
+                        <span class="categoria-produto">
+                            FEMININO / BOLSAS
+                        </span>
+
+                        <h3>Essential Bag</h3>
+
+                        <p class="preco-produto">R$ 549,90</p>
+
+                        <button class="botao-produto">
+                            COMPRAR
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             SOBRE NÓS
+        ====================================== -->
+
+        <section id="sobre-nos" class="sobre-loja">
+
+            <div class="sobre-conteudo">
+
+                <span class="subtitulo-secao">
+                    D-RAW CLOTHING / NOSSA HISTÓRIA
+                </span>
+
+                <h2>MAIS QUE UMA JAQUETA. UMA IDENTIDADE.</h2>
+
+                <p>
+                    A D-Raw Clothing é uma marca que busca transformar
+                    a maneira como as pessoas enxergam as roupas de couro.
+                    Nosso objetivo é oferecer peças que expressem
+                    personalidade, criatividade e autenticidade.
+                </p>
+
+                <p>
+                    Diferente das jaquetas tradicionais, que geralmente
+                    seguem modelos simples e predominam na cor preta,
+                    acreditamos que uma peça pode carregar muito mais
+                    identidade.
+                </p>
+
+                <p>
+                    Nossa proposta é desenvolver jaquetas estilizadas,
+                    com bordados, desenhos, detalhes diferenciados e
+                    possibilidades de personalização. Cada detalhe
+                    pode transformar uma roupa em uma expressão individual.
+                </p>
+
+            </div>
+
+            <div class="sobre-diferenciais">
+
+                <div class="diferencial">
+
+                    <h3>BORDADOS EXCLUSIVOS</h3>
+
+                    <p>
+                        Jaquetas com bordados, desenhos e detalhes
+                        que fogem dos modelos convencionais.
+                    </p>
+
+                </div>
+
+                <div class="diferencial">
+
+                    <h3>PERSONALIZAÇÃO</h3>
+
+                    <p>
+                        Possibilidades de criar peças com elementos
+                        que representem o estilo de cada pessoa.
+                    </p>
+
+                </div>
+
+                <div class="diferencial">
+
+                    <h3>DESIGN AUTÊNTICO</h3>
+
+                    <p>
+                        Modelos diferenciados que combinam criatividade,
+                        qualidade e personalidade.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="sobre-final">
+
+                <h2>NÃO SEGUIR O PADRÃO. CRIAR O PRÓPRIO.</h2>
+
+                <p>
+                    Acreditamos que o verdadeiro estilo está nos detalhes.
+                    Uma jaqueta não precisa ser apenas preta e lisa.
+                    Ela pode carregar histórias, desenhos e referências
+                    que representem quem a veste. Nossa proposta é unir
+                    a tradição do couro com uma visão mais criativa
+                    e contemporânea da moda.
+                </p>
+
+                <a href="#masculino" class="botao-banner">
+                    CONHECER COLEÇÃO
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             RODAPÉ
+        ====================================== -->
+
+        <footer class="rodape" id="contato">
+
+            <h2>D-Raw Clothing</h2>
+
+            <p>Estilo, qualidade e autenticidade.</p>
+
+            <div class="links-rodape">
+
+                <a href="#masculino">Masculino</a>
+
+                <a href="#feminino">Feminino</a>
+
+                <a href="sobre.html">Sobre Nós</a>
+
+                <a href="cadastro.html">Cadastro</a>
+
+                <a href="login.html">Login</a>
+
+            </div>
+
+            <p class="copyright">
+                © 2026 D-Raw Clothing. Todos os direitos reservados.
+            </p>
+
+        </footer>
+
+    </main>
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script>
+
+        /* =====================================
+           MENU LATERAL
+        ====================================== */
+
+        var abrirMenu = document.getElementById("btn-abrir-menu");
+
+        var fecharMenu = document.getElementById("btn-fechar-menu");
+
+        var menuLateral = document.getElementById("menu-lateral");
+
+        var overlay = document.getElementById("menu-overlay");
+
+
+        abrirMenu.addEventListener("click", function() {
+
+            menuLateral.classList.add("ativo");
+
+            overlay.classList.add("ativo");
+
+        });
+
+
+        fecharMenu.addEventListener("click", function() {
+
+            menuLateral.classList.remove("ativo");
+
+            overlay.classList.remove("ativo");
+
+        });
+
+
+        overlay.addEventListener("click", function() {
+
+            menuLateral.classList.remove("ativo");
+
+            overlay.classList.remove("ativo");
+
+        });
+
+
+        var linksMenu = document.querySelectorAll(".lista-menu a");
+
+        linksMenu.forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                menuLateral.classList.remove("ativo");
+
+                overlay.classList.remove("ativo");
+
+            });
+
+        });
+
+
+        /* =====================================
+           CARRINHO DE COMPRAS
+        ====================================== */
+
+        var carrinho = JSON.parse(localStorage.getItem("carrinho-draw")) || [];
+
+        var abrirCarrinho = document.getElementById("abrir-carrinho");
+
+        var fecharCarrinho = document.getElementById("fechar-carrinho");
+
+        var carrinhoLateral = document.getElementById("carrinho-lateral");
+
+        var carrinhoOverlay = document.getElementById("carrinho-overlay");
+
+        var itensCarrinho = document.getElementById("itens-carrinho");
+
+        var contadorCarrinho = document.getElementById("contador-carrinho");
+
+        var totalCarrinho = document.getElementById("total-carrinho");
+
+
+        // ABRIR CARRINHO
+
+        abrirCarrinho.addEventListener("click", function() {
+
+            carrinhoLateral.classList.add("ativo");
+
+            carrinhoOverlay.classList.add("ativo");
+
+        });
+
+
+        // FECHAR CARRINHO
+
+        fecharCarrinho.addEventListener("click", function() {
+
+            carrinhoLateral.classList.remove("ativo");
+
+            carrinhoOverlay.classList.remove("ativo");
+
+        });
+
+
+        carrinhoOverlay.addEventListener("click", function() {
+
+            carrinhoLateral.classList.remove("ativo");
+
+            carrinhoOverlay.classList.remove("ativo");
+
+        });
+
+
+        // CONVERTER PREÇO BRASILEIRO PARA NÚMERO
+
+        function converterPreco(preco) {
+
+            return Number(
+                preco.replace("R$", "")
+                     .replace(/\./g, "")
+                     .replace(",", ".")
+                     .trim()
+            );
+
+        }
+
+
+        // FORMATAR VALOR EM REAL
+
+        function formatarPreco(valor) {
+
+            return valor.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+
+        }
+
+
+        // ADICIONAR PRODUTO
+
+        var botoesComprar = document.querySelectorAll(".botao-produto");
+
+        botoesComprar.forEach(function(botao) {
+
+            botao.addEventListener("click", function() {
+
+                var produto = botao.closest(".produto");
+
+                var nome = produto.querySelector("h3").textContent;
+
+                var precoTexto = produto.querySelector(".preco-produto").textContent;
+
+                var preco = converterPreco(precoTexto);
+
+                carrinho.push({
+
+                    nome: nome,
+
+                    preco: preco
+
+                });
+
+                atualizarCarrinho();
+
+                // ABRIR CARRINHO AUTOMATICAMENTE
+
+                carrinhoLateral.classList.add("ativo");
+
+                carrinhoOverlay.classList.add("ativo");
+
+            });
+
+        });
+
+
+        // ATUALIZAR CARRINHO
+
+        function atualizarCarrinho() {
+
+            itensCarrinho.innerHTML = "";
+
+            var total = 0;
+
+            // VERIFICAR SE ESTÁ VAZIO
+
+            if (carrinho.length === 0) {
+
+                itensCarrinho.innerHTML =
+                    '<p class="carrinho-vazio">Seu carrinho está vazio.</p>';
+
+            }
+
+            // MOSTRAR PRODUTOS
+
+            carrinho.forEach(function(produto, index) {
+
+                total += produto.preco;
+
+                var item = document.createElement("div");
+
+                item.classList.add("item-carrinho");
+
+                var informacoes = document.createElement("div");
+
+                informacoes.classList.add("item-carrinho-info");
+
+                var nomeProduto = document.createElement("h3");
+
+                nomeProduto.textContent = produto.nome;
+
+                var precoProduto = document.createElement("p");
+
+                precoProduto.textContent = formatarPreco(produto.preco);
+
+                var botaoRemover = document.createElement("button");
+
+                botaoRemover.classList.add("botao-remover");
+
+                botaoRemover.textContent = "REMOVER";
+
+                botaoRemover.addEventListener("click", function() {
+
+                    removerProduto(index);
+
+                });
+
+                informacoes.appendChild(nomeProduto);
+
+                informacoes.appendChild(precoProduto);
+
+                item.appendChild(informacoes);
+
+                item.appendChild(botaoRemover);
+
+                itensCarrinho.appendChild(item);
+
+            });
+
+
+            // ATUALIZAR QUANTIDADE
+
+            contadorCarrinho.textContent = carrinho.length;
+
+
+            // ATUALIZAR TOTAL
+
+            totalCarrinho.textContent = formatarPreco(total);
+
+
+            // SALVAR CARRINHO NO NAVEGADOR
+
+            localStorage.setItem("carrinho-draw", JSON.stringify(carrinho));
+
+        }
+
+
+        // REMOVER PRODUTO
+
+        function removerProduto(index) {
+
+            carrinho.splice(index, 1);
+
+            atualizarCarrinho();
+
+        }
+
+
+        // FINALIZAR COMPRA
+
+        function finalizarCompra() {
+
+            if (carrinho.length === 0) {
+
+                alert("Seu carrinho está vazio!");
+
+                return;
+
+            }
+
+            alert(
+                "Sua compra possui " + carrinho.length +
+                " produto(s), totalizando " +
+                totalCarrinho.textContent +
+                ". A integração do pagamento ainda precisa ser configurada."
+            );
+
+        }
+
+
+        // CARREGAR CARRINHO AO ABRIR A PÁGINA
+
+        atualizarCarrinho();
+
+    </script>
+
+</body>
+
+</html>

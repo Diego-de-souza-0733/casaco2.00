@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>D-Raw Clothing | Cadastro</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #800020;
+            color: #E6D7C3;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+            border-bottom: 1px solid #E6D7C3;
+        }
+
+        .logo {
+            border: 2px solid #E6D7C3;
+            padding: 9px 15px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .navegacao-direita {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .menu-secoes {
+            display: flex;
+            gap: 25px;
+        }
+
+        .menu-secoes a {
+            color: #E6D7C3;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* MENU HAMBURGUER */
+
+        .menu-linhas {
+            width: 30px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .menu-linhas span {
+            width: 100%;
+            height: 2px;
+            background-color: #E6D7C3;
+        }
+
+        /* MENU LATERAL */
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 998;
+            display: none;
+        }
+
+        .menu-overlay.ativo {
+            display: block;
+        }
+
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 320px;
+            max-width: 85%;
+            height: 100vh;
+            background-color: #800020;
+            border-left: 1px solid #E6D7C3;
+            z-index: 999;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .menu-lateral.ativo {
+            right: 0;
+        }
+
+        .btn-fechar {
+            font-size: 35px;
+            text-align: right;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .conteudo-menu-lateral {
+            padding: 15px 25px;
+        }
+
+        .grupo-menu {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #E6D7C3;
+            padding-bottom: 15px;
+        }
+
+        .grupo-menu h3 {
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .lista-menu {
+            list-style: none;
+        }
+
+        .lista-menu li {
+            margin-bottom: 12px;
+        }
+
+        .lista-menu a {
+            color: #E6D7C3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .lista-menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* CADASTRO */
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 75px);
+            padding: 25px 15px;
+        }
+
+        .cadastro {
+            width: 100%;
+            max-width: 480px;
+            border: 2px solid #E6D7C3;
+            border-radius: 15px;
+            padding: 25px 22px;
+            text-align: center;
+        }
+
+        .cadastro h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .cadastro p {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* CAMPOS */
+
+        .campo {
+            margin-bottom: 12px;
+        }
+
+        .campo input {
+            width: 100%;
+            height: 48px;
+            padding: 10px 15px;
+            border: 2px solid #E6D7C3;
+            border-radius: 9px;
+            background-color: transparent;
+            color: #E6D7C3;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo input::placeholder {
+            color: #E6D7C3;
+        }
+
+        .campo input:focus {
+            border-color: white;
+        }
+
+        /* BOTÃO */
+
+        button {
+            width: 100%;
+            height: 48px;
+            margin-top: 4px;
+            border: none;
+            border-radius: 9px;
+            background-color: #E6D7C3;
+            color: #800020;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: white;
+        }
+
+        /* LOGIN */
+
+        .login {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login a {
+            color: #E6D7C3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+                padding: 8px;
+            }
+
+            .navegacao-direita {
+                gap: 12px;
+            }
+
+            .menu-secoes {
+                gap: 10px;
+            }
+
+            .menu-secoes a {
+                font-size: 11px;
+            }
+
+            .cadastro {
+                padding: 22px 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+
+    <header>
+
+        <div class="logo">
+            D-Raw Clothing
+        </div>
+
+        <div class="navegacao-direita">
+
+            <nav class="menu-secoes">
+                <a href="mostrador.html#masculino">Masculino</a>
+                <a href="mostrador.html#feminino">Feminino</a>
+            </nav>
+
+            <div class="menu-linhas" id="btn-abrir-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- FUNDO ESCURO -->
+
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- MENU LATERAL -->
+
+    <nav class="menu-lateral" id="menu-lateral">
+
+        <div class="btn-fechar" id="btn-fechar-menu">&times;</div>
+
+        <div class="conteudo-menu-lateral">
+
+            <div class="grupo-menu">
+
+                <h3>Setor Masculino</h3>
+
+                <ul class="lista-menu">
+                    <li><a href="mostrador.html#jaquetas-couro">Jaquetas de Couro Personalizadas</a></li>
+                    <li><a href="mostrador.html#luvas">Luvas</a></li>
+                    <li><a href="mostrador.html#conjuntos">Conjuntos</a></li>
+                    <li><a href="mostrador.html#mochilas">Mochilas</a></li>
+                    <li><a href="mostrador.html#roupas-personalizadas">Roupas Personalizadas</a></li>
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <h3>Setor Feminino</h3>
+
+                <ul class="lista-menu">
+                    <li><a href="mostrador.html#feminino">Ver Coleção Feminina</a></li>
+                </ul>
+
+            </div>
+
+            <div class="grupo-menu">
+
+                <ul class="lista-menu">
+                    <li><a href="mostrador.html#sobre-nos">Sobre Nós</a></li>
+                    <li><a href="mostrador.html#contato">Contato</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="mostrador.html#transparencia">Transparência</a></li>
+                    <li><a href="mostrador.html">Página inicial</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- ÁREA DE CADASTRO -->
+
+    <main>
+
+        <section class="cadastro">
+
+            <h1>CADASTRO</h1>
+
+            <p>Crie sua conta na D-Raw Clothing</p>
+
+            <form id="formCadastro">
+
+                <div class="campo">
+                    <input
+                        type="text"
+                        id="usuario"
+                        placeholder="Nome de usuário"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="E-mail"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Senha"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <input
+                        type="password"
+                        id="confirmarSenha"
+                        placeholder="Confirmar senha"
+                        required
+                    >
+                </div>
+
+                <button type="submit">
+                    Cadastrar
+                </button>
+
+            </form>
+
+            <div class="login">
+                Já tem uma conta?
+                <a href="login.html">Faça login</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // ABRIR E FECHAR MENU
+
+        var abrirMenu = document.getElementById("btn-abrir-menu");
+        var fecharMenu = document.getElementById("btn-fechar-menu");
+        var menuLateral = document.getElementById("menu-lateral");
+        var overlay = document.getElementById("menu-overlay");
+
+        abrirMenu.addEventListener("click", function() {
+            menuLateral.classList.add("ativo");
+            overlay.classList.add("ativo");
+        });
+
+        fecharMenu.addEventListener("click", function() {
+            menuLateral.classList.remove("ativo");
+            overlay.classList.remove("ativo");
+        });
+
+        overlay.addEventListener("click", function() {
+            menuLateral.classList.remove("ativo");
+            overlay.classList.remove("ativo");
+        });
+
+        // VALIDAR SENHAS
+
+        document.getElementById("formCadastro").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("confirmarSenha").value;
+
+            if (senha !== confirmarSenha) {
+                alert("As senhas não são iguais!");
+                return;
+            }
+
+            alert("Senhas conferidas! Cadastro pronto para ser enviado.");
+
+        });
+
+    </script>
+
+</body>
+</html>

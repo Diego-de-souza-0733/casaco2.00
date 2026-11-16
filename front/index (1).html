@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitantes</title>
+</head>
+<body>
+    <h1>Cadastro de visitantes</h1>
+    <form id="formulario">
+        <label for="nome">Nome: </label>
+        <input type="text" id="nome" required>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <h2>Lista de Visitantes</h2>
+    <ul id="listaVisitantes"></ul>
+
+    <script>
+        async function cadastrarVisitante(nomeVisitante) {
+            try {
+                const resposta = await fetch('http://localhost:3000/cadVisitante', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // Encaminha nome que veio como parametro no corpo do arquivo JSON
+                body: JSON.stringify({
+                    nome: nomeVisitante
+                })
+                });
+
+                // A variável dados recebe um objeto visitante
+                const dados = await resposta.json();
+
+                if (resposta.ok) {
+                    console.log("Cadastro de visitante realizado com sucesso")
+                } else {
+                switch (resposta.status) {
+                    case 400:
+                    console.warn('⚠️ Visitante não encontrado');
+                    break;
+                    case 401:
+                    console.warn('⚠️ Nenhum visitante encontrado');
+                    break;
+                    case 500:
+                    console.warn('💥 Erro interno no servidor. Tente novamente mais tarde.');
+                    break;
+                    default:
+                    console.warn(`❗ Erro inesperado: ${resposta.status}`);
+                }
+
+                console.debug('Detalhes do erro:', dados.mensagem || dados);
+                }
+            } catch (erro) {
+                console.error('🚫 Erro ao tentar buscar o produto:', erro.message);
+            }
+        }
+
+        const form = document.getElementById('formulario');
+
+        form.addEventListener("submit", function(event){
+            event.preventDefault();
+
+            const nomeVisitante = document.getElementById('nome').value;
+
+            cadastrarVisitante(nomeVisitante);
+        })
+    </script>
+</body>
+</html>
